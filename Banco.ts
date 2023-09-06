@@ -38,3 +38,29 @@ class Conta {
         console.log("\n");
       }
     }
+
+    // Método para realizar depósitos
+    deposito(valor: number): void {
+      this.saldo += valor;
+      const descricaoTransacao = `Depósito: R$${valor}`;
+      this.registrarTransacao(descricaoTransacao);
+      console.log(`Depósito de ${valor} realizado com sucesso.`);
+      console.log("\n");
+    }
+  
+    // Método para realizar transferências
+    transferencia(destino: Conta, transferencia: number): void {
+      if (transferencia > this.saldo) {
+        console.log("Saldo insuficiente para a transferência.");
+        console.log("\n");
+      } else {
+        this.saldo -= transferencia;
+        destino.deposito(transferencia);
+  
+        const descricaoTransacao = `Transferência para a conta ${destino.numeroConta}: R$${transferencia}`;
+        this.registrarTransacao(descricaoTransacao);
+  
+        console.log(`Transferência de ${transferencia} realizada com sucesso para o destinatário.`);
+        console.log("\n");
+      }
+    }
