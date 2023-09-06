@@ -64,3 +64,20 @@ class Conta {
         console.log("\n");
       }
     }
+
+    // Método para exibir o saldo da conta
+   mostrarSaldo(): void {
+     console.log(`Número da Conta: ${this.numeroConta}\nSaldo: R$${this.saldo}`);
+     console.log("\n");
+   }
+ 
+   // Método para registrar uma transação no histórico
+   registrarTransacao(transacao: string): void {
+     this.historicoTransacoes.push(transacao);
+   }
+ 
+   // Método para obter o histórico de transações
+   getHistoricoTransacoes(): string[] {
+     return this.historicoTransacoes;
+   }
+ }
