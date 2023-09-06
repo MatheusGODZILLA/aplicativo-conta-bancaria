@@ -25,3 +25,16 @@ class Conta {
       this.cliente = cliente;
       this.historicoTransacoes = [];
     }
+  
+    // Método para realizar saques
+    saque(valor: number): void {
+      if (valor > this.saldo) {
+        console.log("Saldo insuficiente para o saque.");
+      } else {
+        this.saldo -= valor;
+        const descricaoTransacao = `Saque: R$${valor}`;
+        this.registrarTransacao(descricaoTransacao);
+        console.log(`Saque de ${valor} realizado com sucesso.`);
+        console.log("\n");
+      }
+    }
