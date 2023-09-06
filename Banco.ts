@@ -81,3 +81,103 @@ class Conta {
      return this.historicoTransacoes;
    }
  }
+
+ // Funcionamento principal
+ import * as readline from 'readline';
+ 
+ const rl = readline.createInterface({
+   input: process.stdin,
+   output: process.stdout,
+ });
+ 
+ // Cadastro inicial do cliente
+ console.log("//-- Cadastro inicial --//");
+ rl.question("Nome do Cliente: ", (nome) => {
+   rl.question("Saldo Inicial: ", (saldo) => {
+     rl.question("Email: ", (email) => {
+       const cliente = new Cliente(nome, Number(saldo), email);
+       const conta1 = new Conta(Number(saldo), 12345, cliente);
+ 
+       console.log("");
+ 
+       console.log("//-- Aplicativo de Conta Bancária --//");
+ 
+       function menu() {
+         console.log("1. Informações do Cliente e da Conta");
+         console.log("2. Depósito");
+         console.log("3. Saque");
+         console.log("4. Transferência");
+         console.log("5. Histórico de transações");
+         console.log("6. Sair");
+ 
+         rl.question("\nSelecione uma opção: ", (opcao) => {
+           switch (opcao) {
+             case "1":
+               console.log("Informações do Cliente:");
+               console.log("Nome: " + cliente.nome);
+               console.log("Email: " + cliente.email);
+ 
+               console.log("\nInformações da Conta:");
+               conta1.mostrarSaldo();
+               menu();
+               break;
+ 
+             case "2":
+               rl.question("\nInforme o valor para depósito: ", (valorDeposito) => {
+                 conta1.deposito(Number(valorDeposito));
+                 menu();
+               });
+               break;
+ 
+             case "3":
+               rl.question("\nInforme o valor para saque: ", (valorSaque) => {
+                 conta1.saque(Number(valorSaque));
+                 menu();
+               });
+               break;
+ 
+             case "4":
+               rl.question("Número da Conta de Destino: ", (numeroContaDestino) => {
+                 const contaDestino = new Conta(0, parseInt(numeroContaDestino), new Cliente("", 0, ""));
+                 if (contaDestino != null) {
+                   rl.question("\nInforme o valor para transferência: ", (valorTransferencia) => {
+                     conta1.transferencia(contaDestino, Number(valorTransferencia));
+                     menu();
+                   });
+                 } else {
+                   console.log("Conta de destino não encontrada.");
+                   menu();
+                 }
+               });
+               break;
+ 
+             case "5":
+               const historico = conta1.getHistoricoTransacoes();
+               if (historico.length === 0) {
+                 console.log("\nNenhuma transação recente encontrada.\n");
+               } else {
+                 console.log("\nHistórico de Transações:");
+                 for (const transacao of historico) {
+                   console.log(transacao);
+                 }
+                 console.log("\n");
+               }
+               menu();
+               break;
+ 
+             case "6":
+               console.log("\nValeu!");
+               rl.close();
+               break;
+ 
+             default:
+               console.log("\nOpção inválida. Tente novamente.");
+               menu();
+           }
+         });
+       }
+ 
+       menu();
+     });
+   });
+ });
