@@ -1,6 +1,7 @@
 // Importando estruturas para criar e manipular listas
 import java.util.ArrayList;
 import java.util.List;
+
 public class Conta {
     double saldo;
     int numeroConta;
@@ -54,7 +55,7 @@ public class Conta {
             System.out.println("Transferência de " + transferencia + " realizada com sucesso para o destinatário.");
             System.out.println("\n");
         }
-    }
+    }    
 
     // Método para exibir o saldo da conta
     public void mostrarSaldo() {
