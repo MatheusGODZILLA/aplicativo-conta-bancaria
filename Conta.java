@@ -17,6 +17,9 @@ public class Conta {
         this.historicoTransacoes = new ArrayList<>();
     }
 
+    public Conta(double saldoInicial, String numeroConta2, Cliente cliente2) {
+    }
+
     // Método para realizar saques
     public void saque(double valor) {
         if (valor > saldo) {

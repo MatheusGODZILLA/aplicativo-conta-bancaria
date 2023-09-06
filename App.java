@@ -1,68 +1,84 @@
 // Importando estruturas para manipular listas e ler entradas
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in); // Cria um objeto Scanner para leitura de entrada
 
+        // Cadastro inicial do cliente
+        System.out.println("//-- Cadastro inicial --//");
+        System.out.print("Nome do Cliente: ");
+        String nome = scanner.nextLine();
+        System.out.print("Saldo Inicial: ");
+        double saldoInicial = scanner.nextDouble();
+        scanner.nextLine(); // Limpar a linha em branco
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        
         // Cria um cliente com informações iniciais e uma conta bancária
-        Cliente cliente = new Cliente("Matheus", 10000, "matheus@mail.com");
-        Conta conta1 = new Conta(10000, 12345, cliente);
+        Cliente cliente = new Cliente(nome, saldoInicial, email);
+        Conta conta1 = new Conta(saldoInicial, 12345, cliente);
 
-        // Cria um cliente 2 com informações iniciais e uma conta bancária
-        Cliente cliente2 = new Cliente("Pedrão", 0, "pedro@mail.com");
-        Conta conta2 = new Conta(0, 54321, cliente2);
+        System.out.println("");
+        System.out.println("//-- Aplicativo de Conta Bancária --//");
 
-        // Loop principal do programa
-        while (true) {
-            System.out.println("//-- Aplicativo de Conta Bancária --//");
-            System.out.println("1. Informações do Cliente e da Conta");
-            System.out.println("2. Depósito");
-            System.out.println("3. Saque");
-            System.out.println("4. Transferência");
-            System.out.println("5. Histórico de transações");
-            System.out.println("6. Sair");
+        menu(conta1, scanner);
 
-            System.out.println("\nSelecione uma opção:");
-            int opcao = scanner.nextInt();
+        scanner.close();
+    }
 
-            switch (opcao) {
-                case 1:
-                    System.out.println("Informações do Cliente:");
-                    System.out.println("Nome: " + cliente.nome);
-                    System.out.println("Email: " + cliente.email);
+    // Funcionamento do menu
+    public static void menu(Conta conta, Scanner scanner) {
+        System.out.println("1. Informações do Cliente e da Conta");
+        System.out.println("2. Depósito");
+        System.out.println("3. Saque");
+        System.out.println("4. Transferência");
+        System.out.println("5. Histórico de transações");
+        System.out.println("6. Sair");
 
-                    System.out.println("\nInformações da Conta:");
-                    conta1.mostrarSaldo();
-                    break;
+        System.out.print("\nSelecione uma opção: ");
+        int opcao = scanner.nextInt();
 
-                case 2:
-                    System.out.println("\nInforme o valor para depósito:");
-                    double valorDeposito = scanner.nextDouble();
-                    conta1.deposito(valorDeposito);
-                    break;
+        switch (opcao) {
+            case 1:
+                System.out.println("Informações do Cliente:");
+                System.out.println("Nome: " + conta.cliente.nome);
+                System.out.println("Email: " + conta.cliente.email);
 
-                case 3:
-                    System.out.println("\nInforme o valor para saque:");
-                    double valorSaque = scanner.nextDouble();
-                    conta1.saque(valorSaque);
-                    break;
+                System.out.println("\nInformações da Conta:");
+                conta.mostrarSaldo();
+                menu(conta, scanner);
+                break;
 
-                case 4:
-                    Conta contaDestino = conta2;
+            case 2:
+                System.out.print("\nInforme o valor para depósito: ");
+                double valorDeposito = scanner.nextDouble();
+                conta.deposito(valorDeposito);
+                menu(conta, scanner);
+                break;
 
-                    if (contaDestino != null) {
-                        System.out.println("\nInforme o valor para transferência:");
-                        double valorTransferencia = scanner.nextDouble();
-                        conta1.transferencia(contaDestino, valorTransferencia);
-                    } else {
-                        System.out.println("Conta de destino não encontrada.");
-                    }
-                    break;
+            case 3:
+                System.out.print("\nInforme o valor para saque: ");
+                double valorSaque = scanner.nextDouble();
+                conta.saque(valorSaque);
+                menu(conta, scanner);
+                break;
 
-                case 5:
-                List<String> historico = conta1.getHistoricoTransacoes();
+            case 4:
+                System.out.print("Número da Conta de Destino: ");
+                int numeroContaDestino = scanner.nextInt();
+                Conta contaDestino = new Conta(0, numeroContaDestino, new Cliente("", 0, ""));
+                if (contaDestino != null) {
+                    System.out.print("\nInforme o valor para transferência: ");
+                    double valorTransferencia = scanner.nextDouble();
+                    conta.transferencia(contaDestino, valorTransferencia);
+                    menu(conta, scanner);
+                }
+                break;
+
+            case 5:
+                ArrayList<String> historico = (ArrayList<String>) conta.getHistoricoTransacoes();
                 if (historico.isEmpty()) {
                     System.out.println("\nNenhuma transação recente encontrada.\n");
                 } else {
@@ -70,19 +86,19 @@ public class App {
                     for (String transacao : historico) {
                         System.out.println(transacao);
                     }
-                    System.out.println("\n");
+                    System.out.println();
                 }
-                break;
-                
-                case 6:
-                System.out.println("\nSaindo...");
-                scanner.close();
-                System.exit(0); // Encerra o programa
+                menu(conta, scanner);
                 break;
 
-                default:
-                    System.out.println("\nOpção inválida. Tente novamente.");
-            }
+            case 6:
+                System.out.println("\nValeu!");
+                scanner.close();
+                break;
+
+            default:
+                System.out.println("\nOpção inválida. Tente novamente.");
+                menu(conta, scanner);
         }
     }
 }
