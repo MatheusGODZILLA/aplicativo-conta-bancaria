@@ -1,7 +1,6 @@
 // Importando estruturas para criar e manipular listas
 import java.util.ArrayList;
 import java.util.List;
-
 public class Conta {
     double saldo;
     int numeroConta;
@@ -55,5 +54,21 @@ public class Conta {
             System.out.println("Transferência de " + transferencia + " realizada com sucesso para o destinatário.");
             System.out.println("\n");
         }
+    }
+
+    // Método para exibir o saldo da conta
+    public void mostrarSaldo() {
+        System.out.println("Número da Conta: " + numeroConta + "\nSaldo: R$" + saldo);
+        System.out.println("\n");
+    }
+
+    // Método para registrar uma transação no histórico
+    public void registrarTransacao(String transacao) {
+        historicoTransacoes.add(transacao);
+    }
+
+    // Método para obter o histórico de transações
+    public List<String> getHistoricoTransacoes() {
+        return historicoTransacoes;
     }
 }
