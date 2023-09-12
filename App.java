@@ -39,7 +39,8 @@ public class App {
         System.out.println("3. Saque");
         System.out.println("4. Transferência");
         System.out.println("5. Histórico de transações");
-        System.out.println("6. Sair");
+        System.out.println("6. Notificações");
+        System.out.println("7. Sair do aplicativo");
 
         System.out.print("\nSelecione uma opção: ");
         int opcao = scanner.nextInt();
@@ -98,6 +99,20 @@ public class App {
                 break;
 
             case 6:
+                ArrayList<String> notificacoes = (ArrayList<String>) conta.getNotificacoes();
+                if (notificacoes.isEmpty()) {
+                    System.out.println("\nNenhuma notificação encontrada.\n");
+                } else {
+                    System.out.println("\nNotificações:");
+                    for (String notificacao : notificacoes) {
+                        System.out.println(notificacao);
+                    }
+                    System.out.println();
+                }
+                menu(conta, scanner);
+                break;
+
+            case 7:
                 System.out.println("\nValeu!");
                 scanner.close();
                 break;
