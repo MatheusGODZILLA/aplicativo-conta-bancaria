@@ -10,6 +10,10 @@ public class App {
         System.out.println("//-- Cadastro inicial --//");
         System.out.print("Nome do Cliente: ");
         String nome = scanner.nextLine();
+        System.out.print("CPF: ");
+        String CPF = scanner.nextLine();
+        System.out.print("Data de Nascimento: ");
+        String dataNascimento = scanner.nextLine();
         System.out.print("Saldo Inicial: ");
         double saldoInicial = scanner.nextDouble();
         scanner.nextLine(); // Limpar a linha em branco
@@ -17,7 +21,7 @@ public class App {
         String email = scanner.nextLine();
         
         // Cria um cliente com informações iniciais e uma conta bancária
-        Cliente cliente = new Cliente(nome, saldoInicial, email);
+        Cliente cliente = new Cliente(nome, CPF, dataNascimento, saldoInicial, email);
         Conta conta1 = new Conta(saldoInicial, 12345, cliente);
 
         System.out.println("");
@@ -44,6 +48,8 @@ public class App {
             case 1:
                 System.out.println("Informações do Cliente:");
                 System.out.println("Nome: " + conta.cliente.nome);
+                System.out.println("CPF: " + conta.cliente.CPF);
+                System.out.println("Data de Nascimento: " + conta.cliente.dataNascimento);
                 System.out.println("Email: " + conta.cliente.email);
 
                 System.out.println("\nInformações da Conta:");
@@ -68,7 +74,7 @@ public class App {
             case 4:
                 System.out.print("Número da Conta de Destino: ");
                 int numeroContaDestino = scanner.nextInt();
-                Conta contaDestino = new Conta(0, numeroContaDestino, new Cliente("", 0, ""));
+                Conta contaDestino = new Conta(0, numeroContaDestino, new Cliente("Pedro Henrique", "123.456.789-00", "15/03/1990", 0, "ointankavel@mail.com"));
                 if (contaDestino != null) {
                     System.out.print("\nInforme o valor para transferência: ");
                     double valorTransferencia = scanner.nextDouble();
